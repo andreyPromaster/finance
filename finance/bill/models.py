@@ -15,6 +15,9 @@ class Organization(models.Model):
     bank_detail = models.ForeignKey(BankDetails, null=True, on_delete=models.SET_NULL)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.id} {self.name} {self.email}"
+
 
 class Invoice(models.Model):
     ON_REVIEW = 'На проверке'
@@ -44,6 +47,9 @@ class Invoice(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     approver = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"{self.id} {self.type} {self.status} - {self.created_at}"
 
 
 class PaymentItem(models.Model):

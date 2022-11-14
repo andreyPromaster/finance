@@ -10,4 +10,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ("company", )
+    search_fields = ('name', 'description', 'category__name')
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        company = request.user.employee.company
+        return qs.filter(company=company)
